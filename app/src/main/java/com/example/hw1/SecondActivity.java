@@ -1,6 +1,5 @@
 package com.example.hw1;
 
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -14,9 +13,22 @@ public class SecondActivity extends Activity {
 
 
     private boolean addToDB(String my_id, String my_pass, String my_name, String my_phone, String my_address){
+        DbOpenHelper mDbOpenHelper = new DbOpenHelper(this);
+        mDbOpenHelper.open();
+        mDbOpenHelper.create();
+
+        long result_num = mDbOpenHelper.insertColumn(my_id, my_pass, my_name, my_phone, my_address);
+
+        RadioButton Accept = findViewById(R.id.Accept);
+
+        //if (Accept.getva)
+        if (result_num == -1){
+            System.out.printf("Something Wrong in add to DB");
+            return false;
+        }
+
         return true;
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 

@@ -13,7 +13,24 @@ public class MainActivity extends Activity {
     boolean is_Logined = false;
 
     private boolean is_valid(String login_id, String login_pass){
-        return is_Logined;//dummy function
+
+        DbOpenHelper mDbOpenHelper = new DbOpenHelper(this);
+        mDbOpenHelper.open();
+        mDbOpenHelper.create();
+
+        Cursor iCursor = mDbOpenHelper.selectColumns();
+        while(iCursor.moveToNext()){
+            String tempID = iCursor.getString(iCursor.getColumnIndex("userid"));
+            String tempPass = iCursor.getString(iCursor.getColumnIndex("pass"));
+
+            if(tempID.equals(login_id)){
+                if(tempPass.equals(login_pass)){
+                    is_Logined = true;
+                    break;
+                }
+            }
+        }
+        return is_Logined;
     }
 
     @Override
@@ -31,8 +48,9 @@ public class MainActivity extends Activity {
                 String id_string = inputted_id.getText().toString();
                 String pass_string = inputted_pass.getText().toString();
                 if (is_valid(id_string, pass_string)){
-                    //logined
-                    //start activity 3
+                    Intent intent = new Intent(getApplicationContext(),
+                            ThirdActivity.class);
+                    startActivity(intent);
                 }
                 else{
                     System.out.printf("Wrong ID or Passs");
