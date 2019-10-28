@@ -1,3 +1,5 @@
+package com.example.hw1;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
